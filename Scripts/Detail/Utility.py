@@ -30,11 +30,15 @@ def printSuccess( *args, **kwargs ):
 
 def printWarning( *args, **kwargs ):
 
-   print( style.warning + "warning: " + style.none + " ".join( map( str, args ) ), **kwargs )
+   print(
+       f'{style.warning}warning: {style.none}' + " ".join(map(str, args)),
+       **kwargs,
+   )
 
 def printError( *args, **kwargs ):
 
-   print( style.error + "error: " + style.none + " ".join( map( str, args ) ), **kwargs )
+   print(f'{style.error}error: {style.none}' + " ".join(map(str, args)),
+         **kwargs)
 
 def printBold( *args, **kwargs ):
 
@@ -82,5 +86,5 @@ def joinPath( component1, component2, *components ):
 # String utilities.
 def splitDelimitedString( string ):
 
-   return filter( None, set( [ s.strip() for s in string.split( ',' ) ] ) )
+   return filter(None, {s.strip() for s in string.split( ',' )})
 

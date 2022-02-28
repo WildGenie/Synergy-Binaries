@@ -89,7 +89,7 @@ class Configuration():
 
             path = utility.joinPath( self.toplevelPath, os.path.expanduser( path ) )
 
-            utility.printItem( name + ": ", path )
+            utility.printItem(f'{name}: ', path)
 
             if not os.path.exists( path ) and mustExist:
                utility.printError( "Required path does not exist:\n\t", path )
@@ -161,9 +161,9 @@ class Configuration():
          utility.printError( "Unable to extract version information from Git tags." )
          raise SystemExit( 1 )
 
-      self.productVersion = matches.group( 1 ) 
+      self.productVersion = matches.group( 1 )
       self.productRevision = utility.captureCommandOutput( "git rev-parse --short=8 HEAD" )
-      self.productStage = matches.group( 2 ) if matches.group( 2 ) else self.productRevision
+      self.productStage = matches.group( 2 ) or self.productRevision
       self.productPackageName = "-".join( [ self.productName, self.productVersion, self.productStage, self.platformVersion ] ).lower()
 
       utility.printItem( "productVersion: ", self.productVersion )
@@ -177,6 +177,10 @@ class Configuration():
 
    def propertyList( self ):
 
-      return dict( ( name, getattr( self, name ) ) for name in dir( self ) if not callable( getattr( self, name ) ) and not name.startswith( '__' ) )
+      return {
+          name: getattr(self, name)
+          for name in dir(self)
+          if not callable(getattr(self, name)) and not name.startswith('__')
+      }
 
 config = Configuration( utility.joinPath( utility.basePathAtSource( __file__ ), "..", "config.txt" ) )

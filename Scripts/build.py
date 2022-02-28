@@ -21,7 +21,7 @@ def configureSubmodules():
 
    if config.productCheckout:
       os.chdir( config.productRepoPath )
-      utility.runCommand( "git checkout " + config.productCheckout )
+      utility.runCommand(f"git checkout {config.productCheckout}")
       os.chdir( config.toplevelPath )
 
    statusAfter = utility.captureCommandOutput( "git submodule status" )
